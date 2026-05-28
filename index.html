@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>DN Cálculos | Calculadora Proporcional</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+body{
+    background:#0B1120;
+    color:#fff;
+    padding:18px;
+    min-height:100vh;
+}
+
+.container{
+    max-width:1000px;
+    margin:0 auto;
+}
+
+.hero{
+    background:linear-gradient(135deg, #0f2b5e, #1e4a8a);
+    padding:22px 24px;
+    border-radius:36px;
+    margin-bottom:22px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.5);
+    border:1px solid rgba(59,130,246,0.3);
+}
+
+.hero h1{
+    font-size:1.9rem;
+    letter-spacing:-0.3px;
+    background:linear-gradient(135deg, #FFF, #93c5fd);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:0;
+}
+
+.top-config{
+    background:#0f172ad9;
+    backdrop-filter:blur(2px);
+    border-radius:32px;
+    padding:20px;
+    margin-bottom:24px;
+    border:1px solid #1e2a44;
+    box-shadow:0 8px 18px rgba(0,0,0,0.3);
+}
+
+.section-title{
+    font-size:0.9rem;
+    margin-bottom:18px;
+    color:#7aaef5;
+    font-weight:700;
+    letter-spacing:0.5px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:18px;
+}
+
+.field label{
+    display:block;
+    font-size:.7rem;
+    margin-bottom:6px;
+    color:#9bb4d4;
+    text-transform:uppercase;
+    font-weight:600;
+    letter-spacing:0.4px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px 14px;
+    border:none;
+    outline:none;
+    border-radius:24px;
+    background:#1e293b;
+    color:#f1f5f9;
+    font-size:1rem;
+    font-weight:500;
+    border:1px solid #2d3a55;
+    transition:all 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 2px rgba(59,130,246,0.4);
+    background:#0f172a;
+}
+
+.items{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    margin-bottom:10px;
+}
+
+.item-card{
+    background:#0f172a;
+    border-radius:32px;
+    padding:20px 22px;
+    border:1px solid #1f334f;
+    transition:all 0.2s;
+    box-shadow:0 12px 22px rgba(0,0,0,0.3);
+}
+
+.item-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.item-header h3{
+    font-size:1.2rem;
+    background:linear-gradient(130deg,#e2e8f0,#b9d0ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:700;
+}
+
+.remove-btn{
+    background:#b91c1c;
+    color:white;
+    border:none;
+    width:42px;
+    height:42px;
+    border-radius:40px;
+    cursor:pointer;
+    font-size:1.3rem;
+    font-weight:bold;
+}
+
+.result-box{
+    margin-top:18px;
+    background:#020617;
+    padding:20px;
+    border-radius:28px;
+    text-align:center;
+    border:1px solid #1e2f4b;
+}
+
+.result-label{
+    color:#7e9ed5;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.result-value{
+    font-size:2rem;
+    font-weight:800;
+    color:#4ade80;
+}
+
+.info{
+    margin-top:6px;
+    font-size:0.75rem;
+    color:#98a9c7;
+    font-weight:500;
+}
+
+.actions{
+    margin-top:28px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    padding:14px 22px;
+    border-radius:44px;
+    font-weight:700;
+    font-size:0.95rem;
+    cursor:pointer;
+}
+
+.btn-add{
+    background:#1e40af;
+    color:white;
+    flex:2;
+}
+
+.btn-clear{
+    background:#334155;
+    color:#f1f5f9;
+    flex:1;
+}
+
+.total-box{
+    margin-top:28px;
+    background:linear-gradient(125deg,#0b3b2f,#0f5c3e);
+    padding:30px 18px;
+    border-radius:42px;
+    text-align:center;
+    border:1px solid #2e7d5e;
+}
+
+.total-box h2{
+    font-size:1.2rem;
+    margin-bottom:12px;
+}
+
+.total-value{
+    font-size:2.9rem;
+    font-weight:900;
+    background:linear-gradient(145deg,#eefcbf,#b9fbc0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.footer{
+    margin-top:28px;
+    text-align:center;
+    color:#4b6a9b;
+    font-size:0.7rem;
+    border-top:1px dashed #1e2f4a;
+    padding-top:18px;
+}
+
+@media(max-width:550px){
+    .hero h1{
+        font-size:1.4rem;
+    }
+
+    .result-value{
+        font-size:1.5rem;
+    }
+
+    .total-value{
+        font-size:2rem;
+    }
+
+    .btn-add,
+    .btn-clear{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- CABEÇALHO SIMPLIFICADO -->
+    <div class="hero">
+        <h1>📐 DN Cálculos</h1>
+    </div>
+
+    <!-- CONFIGURAÇÃO BASE -->
+    <div class="top-config">
+
+        <div class="section-title">
+            ⚙️ MEDIDA BASE DE REFERÊNCIA
+        </div>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>📏 Largura Base (cm)</label>
+                <input type="number" id="largBase" value="60">
+            </div>
+
+            <div class="field">
+                <label>📐 Altura Base (cm)</label>
+                <input type="number" id="altBase" value="60">
+            </div>
+
+            <div class="field">
+                <label>💰 Valor Base (R$)</label>
+                <input type="number" id="valorBase" value="15">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ITENS -->
+    <div class="items" id="itemsContainer"></div>
+
+    <!-- BOTÕES -->
+    <div class="actions">
+
+        <button class="btn btn-add" onclick="adicionarItem()">
+            ➕ Adicionar Produto
+        </button>
+
+        <button class="btn btn-clear" onclick="limparTudo()">
+            🗑️ Limpar Todos
+        </button>
+
+    </div>
+
+    <!-- TOTAL -->
+    <div class="total-box">
+
+        <h2>💵 TOTAL GERAL</h2>
+
+        <div class="total-value" id="totalGeral">
+            R$ 0,00
+        </div>
+
+    </div>
+
+    <div class="footer">
+        🧮 Fórmula: (Nova Área ÷ Área Base) × Valor Base
+    </div>
+
+</div>
+
+<script>
+
+let contador = 0;
+
+function moeda(valor){
+    return valor.toLocaleString('pt-BR',{
+        style:'currency',
+        currency:'BRL'
+    });
+}
+
+function adicionarItem(){
+
+    contador++;
+
+    const container = document.getElementById('itemsContainer');
+
+    const div = document.createElement('div');
+
+    div.className = 'item-card';
+
+    div.id = 'item'+contador;
+
+    div.innerHTML = `
+    
+        <div class="item-header">
+            <h3>📦 Produto ${contador}</h3>
+
+            <button class="remove-btn"
+            onclick="removerItem(${contador})">
+            ✕
+            </button>
+        </div>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>📏 Largura (cm)</label>
+                <input type="number"
+                id="larg${contador}"
+                value="20"
+                oninput="calcular(${contador})">
+            </div>
+
+            <div class="field">
+                <label>📐 Altura (cm)</label>
+                <input type="number"
+                id="alt${contador}"
+                value="15"
+                oninput="calcular(${contador})">
+            </div>
+
+        </div>
+
+        <div class="result-box">
+
+            <div class="result-label">
+                💲 VALOR DO ITEM
+            </div>
+
+            <div class="result-value"
+            id="resultado${contador}">
+            R$ 0,00
+            </div>
+
+        </div>
+
+    `;
+
+    container.appendChild(div);
+
+    calcular(contador);
+}
+
+function calcular(id){
+
+    const largBase = parseFloat(document.getElementById('largBase').value) || 0;
+
+    const altBase = parseFloat(document.getElementById('altBase').value) || 0;
+
+    const valorBase = parseFloat(document.getElementById('valorBase').value) || 0;
+
+    const larg = parseFloat(document.getElementById('larg'+id).value) || 0;
+
+    const alt = parseFloat(document.getElementById('alt'+id).value) || 0;
+
+    const areaBase = largBase * altBase;
+
+    const areaNova = larg * alt;
+
+    let valor = 0;
+
+    if(areaBase > 0){
+        valor = (areaNova / areaBase) * valorBase;
+    }
+
+    document.getElementById('resultado'+id).innerHTML = moeda(valor);
+
+    atualizarTotal();
+}
+
+function atualizarTotal(){
+
+    let total = 0;
+
+    const resultados = document.querySelectorAll('.result-value');
+
+    resultados.forEach(el => {
+
+        const texto = el.innerText
+        .replace('R$','')
+        .replace(/\./g,'')
+        .replace(',','.');
+
+        const valor = parseFloat(texto);
+
+        if(!isNaN(valor)){
+            total += valor;
+        }
+
+    });
+
+    document.getElementById('totalGeral')
+    .innerHTML = moeda(total);
+}
+
+function removerItem(id){
+
+    const item = document.getElementById('item'+id);
+
+    if(item){
+        item.remove();
+    }
+
+    atualizarTotal();
+}
+
+function limparTudo(){
+
+    document.getElementById('itemsContainer').innerHTML = '';
+
+    atualizarTotal();
+}
+
+document.getElementById('largBase')
+.addEventListener('input', atualizarTudo);
+
+document.getElementById('altBase')
+.addEventListener('input', atualizarTudo);
+
+document.getElementById('valorBase')
+.addEventListener('input', atualizarTudo);
+
+function atualizarTudo(){
+
+    for(let i = 1; i <= contador; i++){
+
+        const item = document.getElementById('item'+i);
+
+        if(item){
+            calcular(i);
+        }
+    }
+}
+
+adicionarItem();
+
+</script>
+
+</body>
+</html>
